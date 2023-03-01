@@ -8,6 +8,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/kthb/docker:/docker:ro
+      - "./.env:/app/.env"
     restart: always
     networks:
       - "apps-net"
