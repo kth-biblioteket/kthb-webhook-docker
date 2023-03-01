@@ -18,5 +18,7 @@ echo "Deploying application..."
 ##docker-compose -H unix:///var/run/docker.sock pull
 ##docker-compose -H unix:///var/run/docker.sock up -d
 echo {$GIT_EVENT}
-docker ps
+cd /docker/mailprint
+docker compose down
+docker compose up -d --build
 echo "Deployment successful!"
