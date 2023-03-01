@@ -1,0 +1,30 @@
+FROM node:16-alpine
+
+# Installera git
+RUN apk add --no-cache git
+
+# Installera docker client
+RUN apk add --no-cache docker
+
+# Installera docker-compose
+RUN apk update && \
+    apk add --no-cache docker-compose
+
+
+WORKDIR /app
+
+COPY . .
+
+# Gör skriptet körbart
+RUN chmod +x /app/deploy.sh
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 9000
+
+CMD ["npm", "start"]
+
