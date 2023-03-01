@@ -43,6 +43,7 @@ function validateSignature(body, secret, signature) {
 
 app.get('/', function (req, res, next) {
     res.json({ challenge: req.query.challenge });
+    res.end("KTH Biblioteket Webhooks")
 });
 
 app.post('/', function (req, res, next) {
