@@ -19,10 +19,6 @@ app.listen(port, (err) => {
     console.log(`server is listening on ${port}`)
 })
 
-app.get('/', (request, response) => {
-    response.send('KTH Biblioteket Webhook')
-})
-
 function cmd(...command) {
     let p = exec(command[0], command.slice(1));
     return new Promise((resolve) => {
@@ -45,11 +41,11 @@ function validateSignature(body, secret, signature) {
     return (hash === signature.split("=")[1]);
 }
 
-app.get('/webhook', function (req, res, next) {
+app.get('/', function (req, res, next) {
     res.json({ challenge: req.query.challenge });
 });
 
-app.post('/webhook', function (req, res, next) {
+app.post('/', function (req, res, next) {
     if (!validateSignature(req.body, webhook_secret, req.get(process.env.GITHUB_WEBHOOK_SIGNATURE_HEADER))) {
         return res.status(401).send({ errorMessage: 'Invalid Signature' });
     }
