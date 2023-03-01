@@ -10,7 +10,7 @@ const port = process.env.PORT
 const webhook_secret = process.env.WEBHOOK_SECRET || '4B8FC6578CE7363E7EF43B783B28A'
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.listen(port, (err) => {
     if (err) {
