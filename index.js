@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const apiRoutes = express.Router();
 
-app.use('/webhook', apiRoutes);
+app.use('/hook', apiRoutes);
 
 app.listen(port, (err) => {
     if (err) {
