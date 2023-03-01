@@ -49,11 +49,13 @@ app.post('/', function (req, res, next) {
     if (!validateSignature(req.body, webhook_secret, req.get(process.env.GITHUB_WEBHOOK_SIGNATURE_HEADER))) {
         return res.status(401).send({ errorMessage: 'Invalid Signature' });
     }
+    console.log("Validated request...")
 
     var action = req.body.data.action.toLowerCase();
     switch (action) {
         case "deploy":
             // Kör deploy-script
+            console.log("Start deploy...")
             exec(process.env.GITHUB_DEPLOY_SCRIPT, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
