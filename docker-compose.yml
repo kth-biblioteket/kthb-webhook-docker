@@ -1,6 +1,6 @@
 services:
   webhook:
-    image: docker pull ghcr.io/kth-biblioteket/kthb-webhook-docker:main 
+    image: ghcr.io/kth-biblioteket/kthb-webhook-docker:main
     #build:
     #  context: .
     #  dockerfile: Dockerfile
