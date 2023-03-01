@@ -35,6 +35,7 @@ function cmd(...command) {
 }
 
 function validateSignature(body, secret, signature) {
+    console.log("Validating request...")
     var hash = crypto.createHmac(process.env.GITHUB_WEBHOOK_HASHALG, secret)
         .update(JSON.stringify(body))
         .digest('hex');
@@ -42,7 +43,7 @@ function validateSignature(body, secret, signature) {
 }
 
 app.get('/', function (req, res, next) {
-    res.json({ challenge: req.query.challenge });
+    //res.json({ challenge: req.query.challenge });
     res.end("KTH Biblioteket Webhooks")
 });
 
