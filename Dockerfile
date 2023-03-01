@@ -18,8 +18,6 @@ COPY . .
 # Gör skriptet körbart
 RUN chmod +x /app/deploy.sh
 
-COPY package*.json ./
-
 RUN npm install
 
 COPY . .
