@@ -12,6 +12,10 @@ const webhook_secret = process.env.WEBHOOK_SECRET || '4B8FC6578CE7363E7EF43B783B
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const apiRoutes = express.Router();
+
+app.use('/webhook', apiRoutes);
+
 app.listen(port, (err) => {
     if (err) {
         return console.log('something bad happened', err)
@@ -43,12 +47,12 @@ function validateSignature(body, secret, signature) {
     return (hash === signature.split("=")[1]);
 }
 
-app.get('/', function (req, res, next) {
+apiRoutes.get('/', function (req, res, next) {
     //res.json({ challenge: req.query.challenge });
     res.end("KTH Biblioteket Webhooks")
 });
 
-app.post('/', function (req, res, next) {
+apiRoutes.post('/', function (req, res, next) {
     if (!validateSignature(req.body, webhook_secret, req.get(process.env.GITHUB_WEBHOOK_SIGNATURE_HEADER))) {
         return res.status(401).send({ errorMessage: 'Invalid Signature' });
     }
