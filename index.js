@@ -56,7 +56,9 @@ apiRoutes.post('/', function (req, res, next) {
     if (!validateSignature(req.body, webhook_secret, req.get(process.env.GITHUB_WEBHOOK_SIGNATURE_HEADER))) {
         return res.status(401).send({ errorMessage: 'Invalid Signature' });
     }
-    console.log("Validated request...")
+    console.log("Signature is valid")
+    console.log("Received payload")
+    console.log(req.body)
 
     var action = req.body.data.action.toLowerCase();
     switch (action) {
