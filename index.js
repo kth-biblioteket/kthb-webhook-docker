@@ -65,7 +65,7 @@ apiRoutes.post('/', function (req, res, next) {
         case "deploy":
             // Kör deploy-script
             console.log("Start deploy...")
-            exec(`process.env.GITHUB_DEPLOY_SCRIPT ${req.body.event} ${req.body.repository.split("/")[1]} ${req.body.commit} ${action}`, (error, stdout, stderr) => {
+            exec(`${process.env.GITHUB_DEPLOY_SCRIPT} ${req.body.event} ${req.body.repository.split("/")[1]} ${req.body.commit} ${action}`, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;
