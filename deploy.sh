@@ -15,7 +15,7 @@ set -e
 
 echo "Deploying application..."
 echo {$GIT_EVENT}
-cd /docker/{$GIT_REPOSITORY}
+cd /docker/$GIT_REPOSITORY
 docker-compose pull
 docker-compose down
 docker-compose up -d --build
