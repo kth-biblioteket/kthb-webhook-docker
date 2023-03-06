@@ -1,16 +1,25 @@
 services:
   webhook:
+    container_name: kthb-webhook-docker
     image: ghcr.io/kth-biblioteket/kthb-webhook-docker:main
-    #build:
-    #  context: .
-    #  dockerfile: Dockerfile
-    container_name: webhook
+    restart: always
+    # Defining an env_file inside the yaml will take environment variables from the file and inject them into the container. 
+    # That makes it visible to your application, 
+    # but cannot be used for variables inside your yaml that you want docker-compose to expand since that variable expansion happens before the env_file contents are parsed.
     env_file:
       - ./.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.webhook.rule=Host(`api.sites.lib.kth.se`) && PathPrefix(`/webhook`)"
+      - "traefik.http.routers.webhook.middlewares=webhook-stripprefix"
+      - "traefik.http.middlewares.webhook-stripprefix.stripprefix.prefixes=/webhook"
+      - "traefik.http.middlewares.webhook-stripprefix.stripprefix.forceSlash=false"
+      - "traefik.http.routers.webhook.entrypoints=websecure"
+      - "traefik.http.routers.webhook.tls=true"
+      - "traefik.http.routers.webhook.tls.certresolver=myresolver"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /home/kthb/docker:/docker:ro
-    restart: always
     networks:
       - "apps-net"
 

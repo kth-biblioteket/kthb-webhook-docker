@@ -3,8 +3,8 @@
 # variables
 GIT_EVENT=${1}
 GIT_REPOSITORY=${2}
-PUID=${3}
-PGID=${4}
+GIT_COMMIT=${3}
+GIT_ACTION=${4}
 
 set -e
 
@@ -13,12 +13,10 @@ set -e
 #  exit 0
 #fi
 
-# Replace the following lines with your deployment process
 echo "Deploying application..."
-##docker-compose -H unix:///var/run/docker.sock pull
-##docker-compose -H unix:///var/run/docker.sock up -d
 echo {$GIT_EVENT}
-cd /docker/mailprint
+cd /docker/{$GIT_REPOSITORY}
+docker-compose pull
 docker-compose down
 docker-compose up -d --build
 echo "Deployment successful!"
